@@ -1,6 +1,6 @@
 package com.example.identity_service.dto.request;
 
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 // tu dong generate getter/setter cho cac private field
 import lombok.*;
@@ -21,11 +21,27 @@ import java.time.LocalDate;
 
 public class UserCreationRequest {
     @Size(min = 3, message = "USERNAME_INVALID")
+    @NotBlank(message = "USERNAME_REQUIRED")
+    @Pattern(
+            regexp = "^[a-zA-Z0-9_]+$",
+            message = "USERNAME_INVALID_FORMAT"
+    )
     String username;
 
+    @NotBlank(message = "PASSWORD_REQUIRED")
     @Size(min = 8, message = "PASSWORD_INVALID")
+    @Pattern(
+            regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).+$",
+            message = "PASSWORD_WEAK"
+    )
     String password;
+
+    @NotBlank(message = "FIRSTNAME_REQUIRED")
+    @Size(max = 50, message = "FIRSTNAME_TOO_LONG")
     String firstName;
+
+    @NotBlank(message = "LASTNAME_REQUIRED")
+    @Size(max = 50, message = "LASTNAME_TOO_LONG")
     String lastName;
 
 
